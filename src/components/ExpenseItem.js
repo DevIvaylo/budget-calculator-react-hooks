@@ -3,7 +3,7 @@ import React from 'react';
 const ExpenseItem = () => {
     return (
         <>
-            <h1>expense item</h1>
+            <h2>expense item</h2>
         </>
     )
 };

@@ -3,7 +3,7 @@ import React from 'react';
 const ExpenseForm = () => {
     return (
         <>
-            <h1>expense form</h1>
+            <h2>expense form</h2>
         </>
     )
 };

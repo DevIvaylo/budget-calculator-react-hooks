@@ -4,7 +4,7 @@ import ExpenseItem from "./ExpenseItem";
 const ExpenseList = () => {
     return (
         <>
-            <h1>expense list </h1>
+            <h2>expense list </h2>
             <ExpenseItem/>
         </>
     )

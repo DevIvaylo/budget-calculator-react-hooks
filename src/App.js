@@ -20,8 +20,20 @@ function App() {
     return (
         <>
             <Alert/>
-            <ExpenseForm/>
-            <ExpenseList/>
+            <h1>
+                budget calculator
+            </h1>
+            <main className='App'>
+                <ExpenseForm/>
+                <ExpenseList expenses={expenses}/>
+            </main>
+            <h1>
+                total spending <span className='total'>
+                £{expenses.reduce((total, currentItem) => {
+                return total += currentItem.amount
+            }, 0)}
+            </span>
+            </h1>
         </>
     );
 }
