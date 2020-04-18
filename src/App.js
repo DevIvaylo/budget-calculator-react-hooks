@@ -20,6 +20,8 @@ function App() {
     const [charge, setCharge] = useState('');
     // single amount + destructuring
     const [amount, setAmount] = useState('');
+    // alert
+    const [alert, setAlert] = useState({show: false});
 
     // ************* functionality ******************
 
@@ -28,6 +30,13 @@ function App() {
     };
     const handleAmount = (event) => {
         setAmount(event.target.value);
+    };
+
+    const handleAlert = ({type, text}) => {
+        setAlert({show: true, type, text});
+        setTimeout(() => {
+            setAlert({show: false})
+        }, 5000)
     };
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -41,15 +50,19 @@ function App() {
             setExpenses([...expenses, singleExpense]);
             setCharge('');
             setAmount('');
+            handleAlert({type: 'success', text: 'item added'})
         } else {
-            //handle alert called
+            handleAlert({
+                type: 'danger',
+                text: `charge can't be empty value and amount value has to be bigger than zero`
+            })
         }
     };
 
 
     return (
         <>
-            <Alert/>
+            {alert.show ? <Alert type={alert.type} text={alert.text}/> : null}
             <h1>
                 budget calculator
             </h1>
