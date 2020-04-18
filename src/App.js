@@ -59,6 +59,22 @@ function App() {
         }
     };
 
+    const clearExpenses = () => {
+        setExpenses([]);
+        handleAlert({type: 'danger', text: 'add items deleted'});
+    };
+
+    const handleDelete = (id) => {
+        const sortedExpenses = expenses.filter(item => item.id !== id);
+        console.log(sortedExpenses);
+        setExpenses(sortedExpenses);
+        handleAlert({type: 'danger', text: 'item deleted'});
+    };
+
+    const handleEdit = (id) => {
+        console.log('handleEdit', id);
+    };
+
 
     return (
         <>
@@ -69,7 +85,8 @@ function App() {
             <main className='App'>
                 <ExpenseForm charge={charge} amount={amount} handleCharge={handleCharge} handleAmount={handleAmount}
                              handleSubmit={handleSubmit}/>
-                <ExpenseList expenses={expenses}/>
+                <ExpenseList expenses={expenses} handleDelete={handleDelete} handleEdit={handleEdit}
+                             clearExpenses={clearExpenses}/>
             </main>
             <h1>
                 total spending <span className='total'>
