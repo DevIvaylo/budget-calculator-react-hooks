@@ -22,6 +22,10 @@ function App() {
     const [amount, setAmount] = useState('');
     // alert
     const [alert, setAlert] = useState({show: false});
+    // edit
+    const [edit, setEdit] = useState(false);
+    // edit item
+    const [id, setId] = useState(0);
 
     // ************* functionality ******************
 
@@ -40,17 +44,25 @@ function App() {
     };
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(charge, amount);
         if (charge !== '' && amount > 0) {
-            const singleExpense = {
-                id: uuid(),
-                charge: charge,
-                amount: amount
-            };
-            setExpenses([...expenses, singleExpense]);
+            if (edit) {
+                let selectedItem = expenses.map(item => {
+                    return item.id === id ? {...item, charge: charge, amount: amount} : item
+                });
+                setExpenses(selectedItem);
+                setEdit(false);
+                handleAlert({type: 'success', text: 'item edited'})
+            } else {
+                const singleExpense = {
+                    id: uuid(),
+                    charge: charge,
+                    amount: amount
+                };
+                setExpenses([...expenses, singleExpense]);
+                handleAlert({type: 'success', text: 'item added'})
+            }
             setCharge('');
             setAmount('');
-            handleAlert({type: 'success', text: 'item added'})
         } else {
             handleAlert({
                 type: 'danger',
@@ -72,7 +84,12 @@ function App() {
     };
 
     const handleEdit = (id) => {
-        console.log('handleEdit', id);
+        let selectedItem = expenses.find(item => item.id === id);
+        let {charge, amount} = selectedItem;
+        setCharge(charge);
+        setAmount(amount);
+        setEdit(true);
+        setId(id);
     };
 
 
@@ -83,7 +100,8 @@ function App() {
                 budget calculator
             </h1>
             <main className='App'>
-                <ExpenseForm charge={charge} amount={amount} handleCharge={handleCharge} handleAmount={handleAmount}
+                <ExpenseForm edit={edit} charge={charge} amount={amount} handleCharge={handleCharge}
+                             handleAmount={handleAmount}
                              handleSubmit={handleSubmit}/>
                 <ExpenseList expenses={expenses} handleDelete={handleDelete} handleEdit={handleEdit}
                              clearExpenses={clearExpenses}/>
