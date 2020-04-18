@@ -12,10 +12,40 @@ const initialExpenses = [
 ];
 
 function App() {
-    // array destructuring
+    // ************* state values ********************
+    // array destructuring for state values
+    // all expenses, add expense
     const [expenses, setExpenses] = useState(initialExpenses);
-    console.log(expenses);
-    console.log(setExpenses);
+    // single expense + destructuring
+    const [charge, setCharge] = useState('');
+    // single amount + destructuring
+    const [amount, setAmount] = useState('');
+
+    // ************* functionality ******************
+
+    const handleCharge = (event) => {
+        setCharge(event.target.value);
+    };
+    const handleAmount = (event) => {
+        setAmount(event.target.value);
+    };
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log(charge, amount);
+        if (charge !== '' && amount > 0) {
+            const singleExpense = {
+                id: uuid(),
+                charge: charge,
+                amount: amount
+            };
+            setExpenses([...expenses, singleExpense]);
+            setCharge('');
+            setAmount('');
+        } else {
+            //handle alert called
+        }
+    };
+
 
     return (
         <>
@@ -24,13 +54,14 @@ function App() {
                 budget calculator
             </h1>
             <main className='App'>
-                <ExpenseForm/>
+                <ExpenseForm charge={charge} amount={amount} handleCharge={handleCharge} handleAmount={handleAmount}
+                             handleSubmit={handleSubmit}/>
                 <ExpenseList expenses={expenses}/>
             </main>
             <h1>
                 total spending <span className='total'>
                 £{expenses.reduce((total, currentItem) => {
-                return total += currentItem.amount
+                return total += parseInt(currentItem.amount)
             }, 0)}
             </span>
             </h1>
