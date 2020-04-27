@@ -14,29 +14,17 @@ import uuid from 'uuid/v4';
 const initialExpenses = localStorage.getItem('expenses') ? JSON.parse(localStorage.getItem('expenses')) : [];
 
 function App() {
-    // ************* state values ********************
-    // array destructuring for state values
-    // all expenses, add expense
     const [expenses, setExpenses] = useState(initialExpenses);
-    // single expense + destructuring
     const [charge, setCharge] = useState('');
-    // single amount + destructuring
     const [amount, setAmount] = useState('');
-    // alert
     const [alert, setAlert] = useState({show: false});
-    // edit
     const [edit, setEdit] = useState(false);
-    // edit item
     const [id, setId] = useState(0);
 
-
-    // ***************** useEffect ********************
 
     useEffect(() => {
         localStorage.setItem('expenses', JSON.stringify(expenses));
     });
-
-    // ************* functionality ******************
 
     const handleCharge = (event) => {
         setCharge(event.target.value);
